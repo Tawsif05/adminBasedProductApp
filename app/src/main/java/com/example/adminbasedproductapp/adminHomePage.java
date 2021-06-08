@@ -25,6 +25,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,10 +73,12 @@ public class adminHomePage extends AppCompatActivity {
         delete = (Button) findViewById(R.id.delete);
         search = (Button) findViewById(R.id.Search);
         name = findViewById(R.id.PNameID);
-        version = (Button) findViewById(R.id.version);
+
         code = findViewById(R.id.PCodeID);
         price = findViewById(R.id.PPriceID);
         text = findViewById(R.id.text);
+
+        checkVersion();
 
 
         Realm.init(this);
@@ -87,17 +92,6 @@ public class adminHomePage extends AppCompatActivity {
 
 
 
-        version.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-
-                Toast.makeText(getApplicationContext(),"button Ok",Toast.LENGTH_SHORT).show();
-                checkVersion();
-
-
-            }
-        });
 
         add.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -337,32 +331,30 @@ public class adminHomePage extends AppCompatActivity {
     private void checkVersion() {
 //        DatabaseReference verSync = FirebaseDatabase.getInstance().getReference().child("Version");
         Toast.makeText(getApplicationContext(),"function Ok",Toast.LENGTH_SHORT).show();
+
         fireVer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
                 for (DataSnapshot versionData : snapshot.getChildren()) {
-                    Toast.makeText(getApplicationContext(),versionData.child("v").getValue().toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),versionData.getValue().toString(),Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(),realmVersion.toString(),Toast.LENGTH_SHORT).show();
-                    if ( versionData.child("v").getValue().toString().equalsIgnoreCase(realmVersion.toString())  ) {
+                    if ( versionData.getValue().toString().equalsIgnoreCase(realmVersion.toString())  ) {
                         Toast.makeText(getApplicationContext(),"No need of sync",Toast.LENGTH_SHORT).show();
 
                     } else {
 
 
-                        realmVersion.setV(Integer.parseInt(versionData.child("v").getValue().toString()));
-                        Toast.makeText(getApplicationContext(),versionData.child("v").getValue().toString(),Toast.LENGTH_SHORT).show();
+                        realmVersion.setV(Integer.parseInt(versionData.getValue().toString()));
+                        Toast.makeText(getApplicationContext(),versionData.getValue().toString(),Toast.LENGTH_SHORT).show();
                         versionSync();
                     }
 
 
 
                 }
-//                    for(DataSnapshot datasnapshot1 : snapshot.getChildren()) {
-//                        Toast.makeText(getApplicationContext(),"logic Ok," + datasnapshot1.child("v").getValue(),Toast.LENGTH_SHORT).show();
-//                        System.out.println(datasnapshot1.child("v").getValue());
-//                    }
+
 
 
 
@@ -424,7 +416,7 @@ public class adminHomePage extends AppCompatActivity {
             ref.child(c).setValue(pro);
 
             realmVersion.setV(realmVersion.getV()+1);
-            fireVer.child("version").setValue(realmVersion);
+            fireVer.child("version number").setValue(realmVersion.getV());
 
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -507,7 +499,7 @@ public class adminHomePage extends AppCompatActivity {
             ref.child(c).removeValue();
 
             realmVersion.setV(realmVersion.getV()+1);
-            fireVer.child("version").setValue(realmVersion);
+            fireVer.child("version number").setValue(realmVersion.getV());
         }
 
     }
@@ -546,7 +538,7 @@ public class adminHomePage extends AppCompatActivity {
         try {
             ref.child(c).setValue(pro);
             realmVersion.setV(realmVersion.getV()+1);
-            fireVer.child("version").setValue(realmVersion);
+            fireVer.child("version number").setValue(realmVersion.getV());
 
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

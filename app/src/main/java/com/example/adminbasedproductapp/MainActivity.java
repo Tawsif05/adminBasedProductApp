@@ -94,7 +94,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressbar.setVisibility(View.GONE);
-                if(task.isSuccessful()){
+                if(task.isSuccessful()  && email.equalsIgnoreCase("tawsif@gmail.com") && password.equalsIgnoreCase("tawsif1234")){
+                    finish();
+                    Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else if(task.isSuccessful() && !email.equalsIgnoreCase("tawsif@gmail.com") && !password.equalsIgnoreCase("tawsif1234")){
                     finish();
                     Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
