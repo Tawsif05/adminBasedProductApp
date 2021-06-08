@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,12 +50,13 @@ public class adminHomePage extends AppCompatActivity {
     Realm realm;
 
     DatabaseReference ref,fireVer;
-
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home_page);
+        mAuth = FirebaseAuth.getInstance();
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -311,6 +316,22 @@ public class adminHomePage extends AppCompatActivity {
         });
 
 
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.menu_layout,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.signOutMenuId){
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkVersion() {
