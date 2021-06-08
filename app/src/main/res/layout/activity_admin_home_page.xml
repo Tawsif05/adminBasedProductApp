@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cardview_dark_background"
+    android:padding="20dp"
+    tools:context=".adminHomePage">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/PNameID"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Code"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/PCodeID"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Price"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/PPriceID"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/add"
+        />
+
+    <Button
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:text="View"
+        />
+
+    <Button
+
+        android:layout_width="match_parent"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content"
+        android:text="Sync"
+
+        android:id="@+id/version"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/update"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/delete"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/Search"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:text="Use only Product code to remove product"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/text"/>
+
+
+</LinearLayout>
