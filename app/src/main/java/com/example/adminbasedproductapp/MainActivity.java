@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else if(task.isSuccessful() && !email.equalsIgnoreCase("tawsif@gmail.com") && !password.equalsIgnoreCase("tawsif1234")){
                     finish();
-                    Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
+                    Intent intent = new Intent(getApplicationContext(),userHomePage.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }

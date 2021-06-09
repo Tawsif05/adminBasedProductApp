@@ -330,7 +330,7 @@ public class adminHomePage extends AppCompatActivity {
 
     private void checkVersion() {
 //        DatabaseReference verSync = FirebaseDatabase.getInstance().getReference().child("Version");
-        Toast.makeText(getApplicationContext(),"function Ok",Toast.LENGTH_SHORT).show();
+
 
         fireVer.addValueEventListener(new ValueEventListener() {
             @Override
@@ -338,8 +338,7 @@ public class adminHomePage extends AppCompatActivity {
 
 
                 for (DataSnapshot versionData : snapshot.getChildren()) {
-                    Toast.makeText(getApplicationContext(),versionData.getValue().toString(),Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(),realmVersion.toString(),Toast.LENGTH_SHORT).show();
+
                     if ( versionData.getValue().toString().equalsIgnoreCase(realmVersion.toString())  ) {
                         Toast.makeText(getApplicationContext(),"No need of sync",Toast.LENGTH_SHORT).show();
 
@@ -347,7 +346,7 @@ public class adminHomePage extends AppCompatActivity {
 
 
                         realmVersion.setV(Integer.parseInt(versionData.getValue().toString()));
-                        Toast.makeText(getApplicationContext(),versionData.getValue().toString(),Toast.LENGTH_SHORT).show();
+
                         versionSync();
                     }
 
