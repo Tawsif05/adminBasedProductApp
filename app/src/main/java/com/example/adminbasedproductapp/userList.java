@@ -36,6 +36,10 @@ public class userList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        this.setTitle("All User");
+
         recyclerView = findViewById(R.id.recycleViewId);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

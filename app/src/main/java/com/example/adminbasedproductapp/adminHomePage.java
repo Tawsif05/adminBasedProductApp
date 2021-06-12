@@ -61,7 +61,9 @@ public class adminHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home_page);
         mAuth = FirebaseAuth.getInstance();
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        this.setTitle("Product");
+
 
 
         ref = FirebaseDatabase.getInstance().getReference("Product");

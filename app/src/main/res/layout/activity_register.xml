@@ -9,27 +9,74 @@
     android:padding="20dp"
     tools:context=".Register">
 
-    <EditText
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/signUpEmailEditTextId"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
+<!--        android:hint="Email"-->
+<!--        android:textColorHint="#ffffff"-->
+<!--        android:textColor="#ffffff"-->
+<!--        ></EditText>-->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/signUpEmailEditTextId"
-        android:inputType="textEmailAddress"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:hint="Email"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
-        ></EditText>
+        app:boxBackgroundColor="@color/cardview_dark_background">
 
-    <EditText
-        android:layout_marginTop="20dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21dp"
+            android:ems="15"
+            android:textColor="#ffffff"
+            android:inputType="textEmailAddress"
+            android:id="@+id/signUpEmailEditTextId"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <EditText-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/signUpPasswordEditTextId"-->
+<!--        android:inputType="textPassword"-->
+<!--        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
+<!--        android:hint="Password"-->
+<!--        android:textColorHint="#ffffff"-->
+<!--        android:textColor="#ffffff">-->
+<!--        -->
+<!--    </EditText>-->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/signUpPasswordEditTextId"
-        android:inputType="textPassword"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:hint="Password"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColorHint="#ffffff"
-        android:textColor="#ffffff"></EditText>
+        android:textColor="#ffffff"
+        app:passwordToggleEnabled="true"
+
+        app:boxBackgroundColor="@color/cardview_dark_background">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21dp"
+            android:ems="15"
+            android:textColor="#ffffff"
+            android:inputType="textPassword"
+            android:id="@+id/signUpPasswordEditTextId">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:layout_marginTop="20dp"

@@ -7,25 +7,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter<productsList> extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
 
     private Context context;
-    private List<Products> productsList;
+    private List<String> productsList;
+    private List<String> productListAll;
     private OnItemClickListener listener;
+    private List<Products> pdeatils;
 
 
-    public MyAdapter(Context context, List<Products> productsList) {
+
+    public MyAdapter(Context context, List<String> productsList,List<Products> pdeatils) {
         this.context = context;
         this.productsList = productsList;
+        this.productListAll = new ArrayList<>(productsList);
+        this.pdeatils = pdeatils;
+
     }
+
 
     @NonNull
     @Override
@@ -38,8 +50,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Products product =productsList.get(i);
-        myViewHolder.textView.setText(product.getName() + "\n" + product.getCode() + "\n" + product.getPrice());
+        String product =productsList.get(i);
+        for(Products p : pdeatils) {
+            if (p.getName().equals(product)) {
+                myViewHolder.textView.setText("Product : "+p.getName()+"\nCode : "+p.getCode()+"\nPrice : "+p.getPrice());
+            }
+        }
 
     }
 
@@ -47,6 +63,44 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() {
         return productsList.size();
     }
+
+    @Override
+    public  Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        //RUn on Background
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+
+            List<String> filteredList = new ArrayList<>();
+
+            if(constraint.toString().isEmpty()){
+                filteredList.addAll(productListAll);
+
+            }else{
+                for(String user:productListAll){
+                    if(user.toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filteredList.add(user);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+
+            return filterResults;
+        }
+        //Run on UI Thread
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            productsList.clear();
+            productsList.addAll((Collection<? extends String>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener , MenuItem.OnMenuItemClickListener{
         TextView textView;

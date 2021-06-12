@@ -7,23 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class useradapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class useradapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>  {
 
     private Context context;
     private List<String> usersList;
+
     private useradapter.OnItemClickListener listener;
 
     public useradapter(Context context, List<String> usersList) {
         this.context = context;
         this.usersList = usersList;
+
+
     }
 
     @NonNull
@@ -46,6 +52,10 @@ public class useradapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() {
         return usersList.size();
     }
+
+
+
+
 
     public class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener , MenuItem.OnMenuItemClickListener{
         TextView textView;

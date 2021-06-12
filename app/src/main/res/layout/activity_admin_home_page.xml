@@ -9,28 +9,97 @@
     android:padding="20dp"
     tools:context=".adminHomePage">
 
-    <EditText
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint=""-->
+<!--        android:textColorHint="#ffffff"-->
+<!--        android:textColor="#ffffff"-->
+<!--        android:id="@+id/PNameID"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product Name"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
-        android:id="@+id/PNameID"/>
-    <EditText
+        app:boxBackgroundColor="@color/cardview_dark_background">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:ems="15"
+            android:textColor="#ffffff"
+            android:inputType="textEmailAddress"
+            android:id="@+id/PNameID"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Product Code"-->
+<!--        android:textColorHint="#ffffff"-->
+<!--        android:textColor="#ffffff"-->
+<!--        android:id="@+id/PCodeID"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product Code"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
-        android:id="@+id/PCodeID"/>
+        app:boxBackgroundColor="@color/cardview_dark_background">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:ems="15"
+            android:textColor="#ffffff"
+            android:inputType="textEmailAddress"
+            android:id="@+id/PCodeID"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Product Price"-->
+<!--        android:textColorHint="#ffffff"-->
+<!--        android:textColor="#ffffff"-->
+<!--        android:id="@+id/PPriceID"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product Price"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
-        android:id="@+id/PPriceID"/>
+        app:boxBackgroundColor="@color/cardview_dark_background">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:ems="15"
+            android:textColor="#ffffff"
+            android:inputType="textEmailAddress"
+            android:id="@+id/PPriceID"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
 
         android:layout_height="wrap_content"
