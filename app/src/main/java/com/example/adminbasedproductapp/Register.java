@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity  implements View.OnClickListener{
 
@@ -25,6 +27,7 @@ public class Register extends AppCompatActivity  implements View.OnClickListener
     private Button signUpButton;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+    DatabaseReference Userdata;
 
 
     @Override
@@ -43,6 +46,8 @@ public class Register extends AppCompatActivity  implements View.OnClickListener
 
         signInTextView.setOnClickListener(this);
         signUpButton.setOnClickListener(this);
+
+        Userdata = FirebaseDatabase.getInstance().getReference("Users");
 
 
     }
@@ -99,6 +104,17 @@ public class Register extends AppCompatActivity  implements View.OnClickListener
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
+                    try {
+                        Userdata.child(email.split("@")[0]);
+                        Userdata.child(email.split("@")[0]).child("Email").setValue(email);
+                        Userdata.child(email.split("@")[0]).child("Admin").setValue("0");
+                        Userdata.child(email.split("@")[0]).child("Editor").setValue("0");
+                        Userdata.child(email.split("@")[0]).child("Viewer").setValue("1");
+
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        System.out.println(e.getMessage());
+                    }
 
                     Toast.makeText(getApplicationContext(),"Registration is Successful",Toast.LENGTH_SHORT).show();
                     finish();

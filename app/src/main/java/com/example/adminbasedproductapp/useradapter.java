@@ -15,44 +15,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class useradapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Products> productsList;
-    private OnItemClickListener listener;
+    private List<String> usersList;
+    private useradapter.OnItemClickListener listener;
 
-
-    public MyAdapter(Context context, List<Products> productsList) {
+    public useradapter(Context context, List<String> usersList) {
         this.context = context;
-        this.productsList = productsList;
+        this.usersList = usersList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
         View view = layoutInflater.inflate(R.layout.item_layout,viewGroup,false);
-        return new MyViewHolder(view);
+        return new MyAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        Products product =productsList.get(i);
-        myViewHolder.textView.setText(product.getName() + "\n" + product.getCode() + "\n" + product.getPrice());
+    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder myViewHolder, int i) {
+        String user = usersList.get(i);
+        myViewHolder.textView.setText(user);
 
     }
 
     @Override
     public int getItemCount() {
-        return productsList.size();
+        return usersList.size();
     }
 
-    public static class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener , MenuItem.OnMenuItemClickListener{
+    public class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener , MenuItem.OnMenuItemClickListener{
         TextView textView;
         ImageView imageView;
-        private OnItemClickListener listener;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -116,8 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         void onDelete(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
 
-        this.listener = listener;
-    }
+
+
 }

@@ -42,7 +42,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class adminHomePage extends AppCompatActivity {
-    private Button add, view, update, delete,search,version;
+    private Button add, view, update, delete,search,users;
     private EditText name, code, price;
     private TextView text;
     ArrayList<String> arrayList;
@@ -73,7 +73,7 @@ public class adminHomePage extends AppCompatActivity {
         delete = (Button) findViewById(R.id.delete);
         search = (Button) findViewById(R.id.Search);
         name = findViewById(R.id.PNameID);
-
+        users = findViewById(R.id.User);
         code = findViewById(R.id.PCodeID);
         price = findViewById(R.id.PPriceID);
         text = findViewById(R.id.text);
@@ -89,7 +89,15 @@ public class adminHomePage extends AppCompatActivity {
 
 
 
-
+        users.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(getApplicationContext(),userList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -311,6 +319,7 @@ public class adminHomePage extends AppCompatActivity {
 
 
     }
+    //SignOut Code Starts
     public boolean onCreateOptionsMenu(Menu menu){
 
         getMenuInflater().inflate(R.menu.menu_layout,menu);
@@ -327,6 +336,8 @@ public class adminHomePage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    //SignOut Code Ends
+
 
     private void checkVersion() {
 //        DatabaseReference verSync = FirebaseDatabase.getInstance().getReference().child("Version");

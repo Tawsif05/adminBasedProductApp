@@ -31,13 +31,19 @@
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:id="@+id/PPriceID"/>
+    <LinearLayout
 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/add"
         />
 
@@ -47,16 +53,25 @@
         android:layout_height="wrap_content"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
         android:text="View"
         />
+    </LinearLayout>
 
+    <LinearLayout
 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/update"
         />
 
@@ -66,16 +81,37 @@
         android:text="Delete"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
         android:id="@+id/delete"
         />
-    <Button
-        android:layout_width="match_parent"
+    </LinearLayout>
+    <LinearLayout
+
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:id="@+id/Search"
-        />
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:id="@+id/Search"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Users"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:id="@+id/User"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
