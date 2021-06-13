@@ -17,12 +17,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText signInEmailEditText, signInPasswordEditText;
     private TextView signUpTextView;
     private Button signInButton;
     private ProgressBar progressbar;
+    DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
     @Override
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signUpTextView = findViewById(R.id.signUpTextViewId);
         signInButton = findViewById(R.id.signInButtonId);
         progressbar = findViewById(R.id.progressbarId);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
 
         signUpTextView.setOnClickListener(this);
@@ -96,18 +104,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressbar.setVisibility(View.GONE);
-                if(task.isSuccessful()  && email.equalsIgnoreCase("tawsif@gmail.com") && password.equalsIgnoreCase("tawsif1234")){
-                    finish();
-                    Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                if(task.isSuccessful()){
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                            for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                if(snapshot1.getKey().equals(email.split("@")[0])){
+                                    if(snapshot1.child("Admin").getValue().equals("1")){
+                                        finish();
+                                        Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                    if(snapshot1.child("Editor").getValue().equals("1")){
+                                        finish();
+                                        Intent intent = new Intent(getApplicationContext(),EditorActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                    if(snapshot1.child("Viewer").getValue().equals("1")){
+                                        finish();
+                                        Intent intent = new Intent(getApplicationContext(),userHomePage.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull  DatabaseError error) {
+
+                        }
+                    });
                 }
-                else if(task.isSuccessful() && !email.equalsIgnoreCase("tawsif@gmail.com") && !password.equalsIgnoreCase("tawsif1234")){
-                    finish();
-                    Intent intent = new Intent(getApplicationContext(),userHomePage.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
+//                if(task.isSuccessful()  && email.equalsIgnoreCase("tawsif@gmail.com") && password.equalsIgnoreCase("tawsif1234")){
+//                    finish();
+//                    Intent intent = new Intent(getApplicationContext(),adminHomePage.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                }
+//                else if(task.isSuccessful() && !email.equalsIgnoreCase("tawsif@gmail.com") && !password.equalsIgnoreCase("tawsif1234")){
+//                    finish();
+//                    Intent intent = new Intent(getApplicationContext(),userHomePage.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                }
                 else{
                     Toast.makeText(getApplicationContext(),"Login Unsuccessful",Toast.LENGTH_SHORT).show();
 

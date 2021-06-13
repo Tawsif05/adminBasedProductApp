@@ -3,15 +3,12 @@ package com.example.adminbasedproductapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,8 +35,9 @@ import java.util.Objects;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class adminHomePage extends AppCompatActivity {
-    private Button add, view, update, delete,search,users;
+public class EditorActivity extends AppCompatActivity {
+
+    private Button view, update, search;
     private EditText name, code, price;
     private TextView text;
     ArrayList<String> arrayList;
@@ -55,24 +53,18 @@ public class adminHomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home_page);
+        setContentView(R.layout.activity_editor);
+
         mAuth = FirebaseAuth.getInstance();
-
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        this.setTitle("Product");
-
-
+        this.setTitle("Editors Panel");
 
         ref = FirebaseDatabase.getInstance().getReference("Product");
         fireVer = FirebaseDatabase.getInstance().getReference("Version");
 
-        add = (Button) findViewById(R.id.add);
         view = (Button) findViewById(R.id.view);
         update = (Button) findViewById(R.id.update);
-        delete = (Button) findViewById(R.id.delete);
         search = (Button) findViewById(R.id.Search);
         name = findViewById(R.id.PNameID);
-        users = findViewById(R.id.User);
         code = findViewById(R.id.PCodeID);
         price = findViewById(R.id.PPriceID);
         text = findViewById(R.id.text);
@@ -85,38 +77,6 @@ public class adminHomePage extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         arrayList = new ArrayList<>();
-
-
-
-        users.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                Intent intent = new Intent(getApplicationContext(),userList.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-
-
-
-        add.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                boolean a = addRecord();
-                if(a == true) {
-                    addToFB();
-                }
-                else{
-//                    Toast.makeText(getApplicationContext(),"Code Exist in FB",Toast.LENGTH_SHORT).show();
-                }
-                name.setText("");
-                code.setText("");
-                price.setText("");
-
-            }
-
-        });
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,96 +91,6 @@ public class adminHomePage extends AppCompatActivity {
                 price.setText("");
             }
 
-        });
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                arrayList.clear();
-                RealmResults<Products> r = realm.where(Products.class).findAll();
-                for(Products p: r){
-                    arrayList.add(p.getCode().toString());
-                }
-
-                dialog = new Dialog(adminHomePage.this);
-
-                dialog.setContentView(R.layout.delete_search);
-
-                dialog.getWindow().setLayout(650,800);
-
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-                dialog.show();
-
-                ListView listView = dialog.findViewById(R.id.delete_list_view);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,arrayList){
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        TextView textView = (TextView) super.getView(position, convertView, parent);
-                        textView.setTextColor(Color.BLACK);
-                        return textView;
-                    }
-                };
-
-                listView.setAdapter(adapter);
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        dialog.dismiss();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(adminHomePage.this);
-
-                        alert.setTitle("Delete entry");
-                        RealmResults<Products> search = realm.where(Products.class).equalTo("Code", adapter.getItem(position)).findAll();
-                        for(Products a : search) {
-                            alert.setMessage("Are you sure you want to delete?\n" + "Product Name: "+ a.getName() + "\nProduct Code: " + a.getCode() + "\nProduct Price: " + a.getPrice()+"\n");
-
-                        }
-                        alert.setCancelable(false);
-                        alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-
-                            public void onClick(DialogInterface dialog1, int which) {
-                                deleteRecord(adapter.getItem(position));
-                                deleteFromFB(adapter.getItem(position));
-                                dialog1.dismiss();
-
-                            }
-                        });
-                        alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog1, int which) {
-                                // close dialog
-                                dialog1.dismiss();
-
-                            }
-                        });
-                        alert.create().show();
-
-//                        code.setText(adapter.getItem(position));
-
-//                        RealmResults<Products> search = realm.where(Products.class).equalTo("Code", code.getText().toString()).findAll();
-//                        for(Products a : search){
-//                            name.setText(a.getName());
-//                            price.setText(a.getPrice());
-//
-//                        }
-
-
-
-
-
-//                        dialog.dismiss();
-                    }
-                });
-//                deleteRecord();
-//                deleteFromFB();
-
-                name.setText("");
-                code.setText("");
-                price.setText("");
-            }
         });
 
         update.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +119,7 @@ public class adminHomePage extends AppCompatActivity {
                     arrayList.add(p.getCode().toString());
                 }
 
-                dialog = new Dialog(adminHomePage.this);
+                dialog = new Dialog(EditorActivity.this);
 
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
 
@@ -342,28 +212,17 @@ public class adminHomePage extends AppCompatActivity {
         fireVer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
                 for (DataSnapshot versionData : snapshot.getChildren()) {
-
                     if ( versionData.getValue().toString().equalsIgnoreCase(realmVersion.toString())  ) {
-
-
+                        Toast.makeText(getApplicationContext(),"No need of sync",Toast.LENGTH_SHORT).show();
                     } else {
-
-
                         realmVersion.setV(Integer.parseInt(versionData.getValue().toString()));
-
                         versionSync();
                     }
-
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
@@ -380,21 +239,16 @@ public class adminHomePage extends AppCompatActivity {
                 realm.beginTransaction();
                 results.deleteAllFromRealm();
                 realm.commitTransaction();
-
+                Toast.makeText(getApplicationContext(),"Sync Completed",Toast.LENGTH_SHORT).show();
                 for(DataSnapshot datasnapshot1 : snapshot.getChildren()){
                     realm.beginTransaction();
                     Products p = realm.createObject(Products.class);
                     p.setCode(Objects.requireNonNull(datasnapshot1.child("code").getValue()).toString());
                     p.setName(Objects.requireNonNull(datasnapshot1.child("name").getValue()).toString());
                     p.setPrice(Objects.requireNonNull(datasnapshot1.child("price").getValue()).toString());
-
                     realm.commitTransaction();
-
-//                    }
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -403,116 +257,20 @@ public class adminHomePage extends AppCompatActivity {
 
     }
 
-
-
-    private void addToFB() {
-
-        String n = name.getText().toString();
-        String c = code.getText().toString();
-        String p = price.getText().toString();
-
-        ProductFB pro = new ProductFB(n, c, p);
-        try {
-            ref.child(c).setValue(pro);
-
-            realmVersion.setV(realmVersion.getV()+1);
-            fireVer.child("version number").setValue(realmVersion.getV());
-
-            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public boolean addRecord(){
-
-        RealmResults<Products> search = realm.where(Products.class).equalTo("Code", code.getText().toString()).findAll();
-        if (search.isEmpty()) {
-            if (TextUtils.isEmpty(code.getText())) {
-                Toast.makeText(getApplicationContext(), "Code Exist or Code is empty", Toast.LENGTH_SHORT).show();
-//                    viewRecord();
-                return false;
-            } else {
-                realm.beginTransaction();
-                Products p = realm.createObject(Products.class);
-                p.setCode(code.getText().toString());
-                p.setName(name.getText().toString());
-                p.setPrice(price.getText().toString());
-
-                realm.commitTransaction();
-
-
-                return true;
-            }
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Code Exist or Code is empty", Toast.LENGTH_SHORT).show();
-
-
-
-            return false;
-        }
-
-
-
-    }
-
-
-
     public void viewRecord(){
         RealmResults<Products> results = realm.where(Products.class).findAll();
-
         text.setText("");
-
         for(Products p : results){
             text.append( p.getCode() + " " + p.getName() +  " " + p.getPrice()+"\n");
         }
-
-
-
-
-    }
-
-    public void deleteRecord(String c){
-        if(c.equals(null)) {
-
-        }
-        else{
-            RealmResults<Products> results = realm.where(Products.class).equalTo("Code", c).findAll();
-            realm.beginTransaction();
-            results.deleteAllFromRealm();
-            realm.commitTransaction();
-        }
-
-
-
-    }
-
-    private void deleteFromFB(String co) {
-        String c = co;
-
-        if(c.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"Enter Code to remove",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            ref.child(c).removeValue();
-
-            realmVersion.setV(realmVersion.getV()+1);
-            fireVer.child("version number").setValue(realmVersion.getV());
-        }
-
     }
 
     public boolean updateRecord(){
         RealmResults<Products> results = realm.where(Products.class).equalTo("Code", code.getText().toString()).findAll();
         if(results.isEmpty()) {
-
-
             return false;
         }
-
-        else {
+        else{
             realm.beginTransaction();
 
             for(Products p : results){
@@ -520,26 +278,19 @@ public class adminHomePage extends AppCompatActivity {
                 p.setPrice(price.getText().toString());
             }
             realm.commitTransaction();
-
-
             return true;
         }
 
     }
-
-
     private void updateRecordFB() {
         String n = name.getText().toString();
         String c = code.getText().toString();
         String p = price.getText().toString();
-
-
         ProductFB pro = new ProductFB(n, c, p);
         try {
             ref.child(c).setValue(pro);
             realmVersion.setV(realmVersion.getV()+1);
             fireVer.child("version number").setValue(realmVersion.getV());
-
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
